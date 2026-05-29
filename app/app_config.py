@@ -11,6 +11,7 @@ file_name_format = "rechnungen_YYYY.csv"
 APP_NAME = "InvoiceDashboard"
 DATA_CONFIG = "data_config.json"
 
+DEMO_MODE = True
 
 required_cols = {
     "Rechnung Nr": None,

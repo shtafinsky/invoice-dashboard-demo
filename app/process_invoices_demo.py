@@ -798,11 +798,14 @@ def calculate_development(df,df_prev,cur_year,prev_year):
 config = load_config()
 
 if not config:
-    st.title("Setup")
+    if app_config.DEMO_MODE:
+        folder = Path(__file__).resolve().parents[1] / "demo_data"
+    else:
+        st.title("Setup")
 
-    folder = st.text_input("Bitte geben Sie den Datenordner an")
+        folder = st.text_input("Bitte geben Sie den Datenordner an")
 
-    submitted=st.button("Speichern")
+        submitted=st.button("Speichern")
 
     if not folder:
         st.stop()
