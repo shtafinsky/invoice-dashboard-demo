@@ -16,6 +16,22 @@ from process_input_data import validate
 import app_config  
 from path import load_config,  save_config 
 
+import logging
+from pathlib import Path
+from datetime import datetime
+
+LOG_FILE = Path(__file__).resolve().parents[1] / "debug.log"
+
+logging.basicConfig(
+    filename=LOG_FILE,
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+    force=True
+)
+
+def debug(msg):
+    logging.info(msg)
+
 # dashboard view
 view_sales = "sale"
 view_invoices = "invoice"
@@ -216,7 +232,7 @@ def load_and_validate_csv(year):
         st.error(f"Fehler beim Laden: {e}")
         return False, None
 
-    st.write(f"st.session_state.view = {st.session_state.view}")
+    debug(f"st.session_state.view = {st.session_state.view}")
 
     if st.session_state.view == view_show:
         ok = True
@@ -300,6 +316,12 @@ def display_sidebar():
                              type="primary",
                              use_container_width=True):
             shutdown_app()
+
+        with st.sidebar.expander("Debug-Log anzeigen"):
+            if LOG_FILE.exists():
+                st.text(LOG_FILE.read_text(encoding="utf-8")[-5000:])
+            else:
+                st.write("Noch kein Log vorhanden.")            
 
 # formating of amounts in hover
 def format_chf(value):
