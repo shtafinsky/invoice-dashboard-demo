@@ -794,29 +794,30 @@ def calculate_development(df,df_prev,cur_year,prev_year):
 # ------------------------ Main routine ----------------------------------
 # Existierende Jahren aus den Rechnungsdateien ermitteln
 # ----------------------------------------------------------------------- 
-    if app_config.DEMO_MODE:
-        folder = Path(__file__).resolve().parents[1] / "demo_data"
-    else:
-        config = load_config()
+if app_config.DEMO_MODE:
+    demo_folder = Path(__file__).resolve().parents[1] / "demo_data"
 
-        if not config:
-            st.title("Setup")
+    config = {
+        "data_folder": str(demo_folder)
+    }
+else:
+    config = load_config()
 
-            folder = st.text_input("Bitte geben Sie den Datenordner an")
+    if not config:
+        st.title("Setup")
 
-            submitted=st.button("Speichern")
+        folder = st.text_input("Bitte geben Sie den Datenordner an")
 
-            if not folder:
-                st.stop()
+        submitted=st.button("Speichern")
 
-            save_config(folder)
-            st.rerun()
+        if not folder:
+            st.stop()
 
-        if config not in st.session_state:
-            st.session_state["config"] = config  
+        save_config(folder)
+        st.rerun()
 
-    st.write("DEMO_MODE:", app_config.DEMO_MODE)
-    st.write("folder type:", type(folder), folder)
+if config not in st.session_state:
+    st.session_state["config"] = config  
 
 # initialization
 init_state()
