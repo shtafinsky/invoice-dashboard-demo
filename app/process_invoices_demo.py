@@ -832,13 +832,16 @@ def calculate_development(df,df_prev,cur_year,prev_year):
 # ------------------------ Main routine ----------------------------------
 # Existierende Jahren aus den Rechnungsdateien ermitteln
 # ----------------------------------------------------------------------- 
-st.success("Check mode")
+st.success(f"check mode")
 if app_config.DEMO_MODE:
+    st.success("DEMO_MODE")
     demo_folder = Path(__file__).resolve().parents[1] / "demo_data"
+    st.success("demo_folder is defined")
 
     config = {
         "data_folder": str(demo_folder)
     }
+    st.success("config is done")
 else:
     config = load_config()
 
