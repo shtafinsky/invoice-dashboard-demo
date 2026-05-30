@@ -216,7 +216,10 @@ def load_and_validate_csv(year):
         st.error(f"Fehler beim Laden: {e}")
         return False, None
 
-    ok, df = validate(df)
+    if st.session_state.view == view_show:
+        ok = True
+    else:
+        ok, df = validate(df)
 
     if not ok:
         return False, df
@@ -480,9 +483,6 @@ def show_year_selector(years):
                                             use_container_width=True)
             submitted_show_files=st.form_submit_button("Datei anzeigen 📄",
                                             use_container_width=True)
-
-    print(f"submitted_dashboard = {submitted_dashboard}")
-    print(f"submitted_show_files = {submitted_show_files}")
 
     if submitted_dashboard or submitted_show_files:
         clear_messages()
