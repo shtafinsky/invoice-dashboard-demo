@@ -216,6 +216,8 @@ def load_and_validate_csv(year):
         st.error(f"Fehler beim Laden: {e}")
         return False, None
 
+    st.write(f"st.session_state.view = {st.session_state.view}")
+
     if st.session_state.view == view_show:
         ok = True
     else:
