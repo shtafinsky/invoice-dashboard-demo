@@ -835,7 +835,8 @@ def calculate_development(df,df_prev,cur_year,prev_year):
 st.success(f"check mode")
 if app_config.DEMO_MODE:
     st.success("DEMO_MODE")
-    demo_folder = Path(__file__).resolve().parents[1] / "demo_data"
+    #demo_folder = Path(__file__).resolve().parents[1] / "demo_data"
+    demo_folder = Path("demo_data")
     st.success("demo_folder is defined")
 
     config = {
