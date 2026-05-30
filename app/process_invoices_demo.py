@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 
-#st.set_page_config(page_title="InvoiceDashboard Demo", layout="wide")
-#st.success("App wurde gestartet")
+st.set_page_config(page_title="InvoiceDashboard Demo", layout="wide")
+st.success("App wurde gestartet")
 #st.stop()
 
 from datetime import datetime as dtt
@@ -51,6 +51,7 @@ customer_chart = "customer"
     
 # reset/initialization of session processing statuses
 def init_state():
+    st.success("init_state")
     # App control
     st.session_state.setdefault("initialized", False)
     st.session_state.setdefault("view", None)
@@ -250,6 +251,7 @@ def load_and_validate_csv(year):
 
 # displays dasboard
 def display_sidebar():
+    st.success("display_sidebar")
     with st.sidebar:
 
         st.markdown("## 📊 Dashboard")
@@ -830,6 +832,7 @@ def calculate_development(df,df_prev,cur_year,prev_year):
 # ------------------------ Main routine ----------------------------------
 # Existierende Jahren aus den Rechnungsdateien ermitteln
 # ----------------------------------------------------------------------- 
+st.success("Check mode")
 if app_config.DEMO_MODE:
     demo_folder = Path(__file__).resolve().parents[1] / "demo_data"
 
@@ -856,6 +859,7 @@ if config not in st.session_state:
     st.session_state["config"] = config  
 
 # initialization
+st.success("Befor init_state")
 init_state()
 
 if st.session_state.view == view_errors:
@@ -865,8 +869,9 @@ if st.session_state.view == view_errors:
 
 # if "data_folder" not in st.session_state or st.session_state.data_folder == None:
 #     st.session_state["data_folder"] = data_folder
-
+st.success("Before listing files")
 files=os.listdir(st.session_state.data_folder)
+st.success("after listing files")
 
 years=set()  # ein set verhindert duplikate - falls dateien aus verschieden ordnern gelesene werden
 match_mask=re.escape(app_config.file_name_format).replace('YYYY',r'(\d{4})')  # escape makes escapes: '.' to '\.'
@@ -876,6 +881,7 @@ for f in files: # geht alle dateien mit rechnungen durch und ermittelt jeweilige
     if match:
         years.add(int(match.group(1)))
 years=sorted(years,reverse=True)
+st.success("files identified")
 
 if len(years)==0: # prüfet, ob die dateien mit rechnungen existieren
     st.write(f"Keine Dateien im Format {app_config.file_name_format}")
