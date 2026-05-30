@@ -169,7 +169,6 @@ def show_dashboard():
 
 # show csv files
 def show_csv_file():
-    print("show_csv_file")
     st.dataframe(st.session_state.df)
 
 # creating pdf from image
@@ -508,7 +507,7 @@ def show_year_selector(years):
             submitted_show_files=st.form_submit_button("Datei anzeigen 📄",
                                             use_container_width=True)
 
-    if submitted_dashboard or submitted_show_files:
+    if submitted_dashboard:
         clear_messages()
         clear_cache_df()
         #clear_session_data()
@@ -526,11 +525,19 @@ def show_year_selector(years):
             st.session_state.year_err = report_year
         else:
             st.session_state.year=report_year  
-            if submitted_dashboard:
-                set_view(view_sales)
-            if submitted_show_files:
-                set_view(view_show)
-        st.rerun()
+            set_view(view_sales)
+
+    if submitted_show_files:
+        clear_messages()
+        clear_cache_df()
+
+        st.session_state.initialized=True        
+
+        st.session_state.year=report_year
+
+        set_view(view_show)
+
+    st.rerun()
 
 # Dashboard for sales
 def display_sales(df):
