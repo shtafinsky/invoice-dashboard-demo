@@ -1,5 +1,10 @@
 import pandas as pd
 import streamlit as st
+
+st.set_page_config(page_title="InvoiceDashboard Demo", layout="wide")
+st.success("App wurde gestartet")
+st.stop()
+
 from datetime import datetime as dtt
 import os, calendar, locale
 import numpy as np
